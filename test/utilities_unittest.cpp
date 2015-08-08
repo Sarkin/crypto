@@ -1,5 +1,4 @@
 #include <algorithm>
-
 #include "../src/utilities.h"
 #include "gtest/gtest.h"
 
