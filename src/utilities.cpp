@@ -4,15 +4,7 @@
 #include <iterator>
 #include <sstream>
 
-std::ostream& operator << (std::ostream& os, const ByteContainer& bc) {
-    std::copy(bc.begin(), bc.end(), std::ostream_iterator<int>(os, " "));
-    return os;
-}
-
-void AsciiToBytes(const std::string& source, ByteContainer& destination) {
-    destination.assign(source.begin(), source.end());
-}
-
+// Returns Base64 represenation of c. Returns c is c is invalid.
 int Base64Value(int c) {
     if (c < 0 || c >= 64) {
         return c;
@@ -28,6 +20,18 @@ int Base64Value(int c) {
     return '/';
 }
 
+// Prints ByteContainer elements space-separated
+std::ostream& operator << (std::ostream& os, const ByteContainer& bc) {
+    std::copy(bc.begin(), bc.end(), std::ostream_iterator<int>(os, " "));
+    return os;
+}
+
+// Converts an ASCII string to a sequence of Bytes
+void AsciiToBytes(const std::string& source, ByteContainer& destination) {
+    destination.assign(source.begin(), source.end());
+}
+
+// Converts a sequence of bytes to a Base64 string.
 void BytesTo64(const ByteContainer& source, std::string& destination) {
     destination.clear();
 
@@ -43,6 +47,7 @@ void BytesTo64(const ByteContainer& source, std::string& destination) {
     }
 }
 
+// Converts a sequence of Bytes to a hex string.
 void BytesToHex(const ByteContainer& source, std::string& destination) {
     destination.clear();
 
@@ -55,6 +60,7 @@ void BytesToHex(const ByteContainer& source, std::string& destination) {
     destination = hex_string_stream.str();
 }
 
+// Converts a hex string to a sequence of Bytes.
 void HexToBytes(const std::string& hex, ByteContainer& destination) {
     destination.clear();
 
