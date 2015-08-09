@@ -59,3 +59,21 @@ TEST(HexToBytes, SimpleHexString) {
     HexToBytes(hex, bc);
     EXPECT_EQ(ByteContainer({0, 1, 2, 16, 161}), bc);
 }
+
+TEST(BytesTo64, SimpleByteSequenceTest) {
+    std::string str = "I'm killing your brain like a poisonous mushroom";
+    ByteContainer bc;
+    AsciiToBytes(str, bc);
+    std::string str64;
+    BytesTo64(bc, str64);
+    EXPECT_EQ("SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsa"
+            "WtlIGEgcG9pc29ub3VzIG11c2hyb29t", str64);
+}
+
+TEST(XorAscii, SimpleAsciiStrings) {
+    std::string lhs = "abcABC";
+    std::string rhs = "abcabc";
+    std::string res;
+    XorAscii(lhs, rhs, res);
+    EXPECT_EQ(std::string(3, '\0') + std::string(3, ' '), res);
+}

@@ -4,7 +4,7 @@
 #include <iterator>
 #include <sstream>
 
-// Returns Base64 represenation of c. Returns c is c is invalid.
+// Returns Base64 represenation of c. Returns c if c is invalid.
 int Base64Value(int c) {
     if (c < 0 || c >= 64) {
         return c;
@@ -20,14 +20,19 @@ int Base64Value(int c) {
     return '/';
 }
 
-// Prints ByteContainer elements space-separated
+// Prints ByteContainer elements space-separated.
 std::ostream& operator << (std::ostream& os, const ByteContainer& bc) {
     std::copy(bc.begin(), bc.end(), std::ostream_iterator<int>(os, " "));
     return os;
 }
 
-// Converts an ASCII string to a sequence of Bytes
+// Converts an ASCII string to a sequence of bytes.
 void AsciiToBytes(const std::string& source, ByteContainer& destination) {
+    destination.assign(source.begin(), source.end());
+}
+
+// Converts sequence of bytes to an ASCII string.
+void BytesToAscii(const ByteContainer& source, std::string& destination) {
     destination.assign(source.begin(), source.end());
 }
 
@@ -47,7 +52,7 @@ void BytesTo64(const ByteContainer& source, std::string& destination) {
     }
 }
 
-// Converts a sequence of Bytes to a hex string.
+// Converts a sequence of bytes to a hex string.
 void BytesToHex(const ByteContainer& source, std::string& destination) {
     destination.clear();
 
@@ -60,7 +65,7 @@ void BytesToHex(const ByteContainer& source, std::string& destination) {
     destination = hex_string_stream.str();
 }
 
-// Converts a hex string to a sequence of Bytes.
+// Converts a hex string to a sequence of bytes.
 void HexToBytes(const std::string& hex, ByteContainer& destination) {
     destination.clear();
 
@@ -75,4 +80,28 @@ void HexToBytes(const std::string& hex, ByteContainer& destination) {
         hex_string_stream >> next_byte;
         destination.push_back(next_byte);
     }
+}
+
+// XORs 2 byte sequences.
+void XorBytes(const ByteContainer& lhs, const ByteContainer& rhs,
+        ByteContainer& res) {
+    size_t size = std::max(lhs.size(), rhs.size());
+    res.resize(size);
+    for (size_t i = 0; i < size; ++i) {
+        Byte le = (i  < lhs.size())? lhs[i]: 0;
+        Byte re = (i  < rhs.size())? rhs[i]: 0;
+        res[i] = le ^ re;
+    }
+}
+
+// XORs 2 ASCII strings.
+void XorAscii(const std::string& lhs, const std::string& rhs,
+        std::string &res) {
+    ByteContainer lbc;
+    AsciiToBytes(lhs, lbc);
+    ByteContainer rbc;
+    AsciiToBytes(rhs, rbc);
+    ByteContainer xbc;
+    XorBytes(lbc, rbc, xbc);
+    BytesToAscii(xbc, res);
 }
