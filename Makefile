@@ -30,7 +30,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread --std=c++11
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = utilities_unittest
+TESTS = bytecontainer_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -72,12 +72,12 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-utilities.o : $(USER_DIR)/utilities.cpp $(USER_DIR)/utilities.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/utilities.cpp
+bytecontainer.o : $(USER_DIR)/bytecontainer.cpp $(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/bytecontainer.cpp
 
-utilities_unittest.o : $(USER_TEST_DIR)/utilities_unittest.cpp \
-                     $(USER_DIR)/utilities.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/utilities_unittest.cpp
+bytecontainer_unittest.o : $(USER_TEST_DIR)/bytecontainer_unittest.cpp \
+                     $(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/bytecontainer_unittest.cpp
 
-utilities_unittest : utilities.o utilities_unittest.o gtest_main.a
+bytecontainer_unittest : bytecontainer.o bytecontainer_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
