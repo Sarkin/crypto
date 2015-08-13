@@ -1,8 +1,9 @@
 #include "bytecontainer.h"
 
 #include <iomanip>
-#include <string>
+#include <stdexcept>
 #include <sstream>
+#include <string>
 #include <vector>
 
 ByteContainer::ByteContainer(const std::string& str, StringRepresentation rep) {
@@ -19,9 +20,7 @@ ByteContainer::ByteContainer(const std::string& str, StringRepresentation rep) {
 }
 
 void ByteContainer::BuildAscii(const std::string& str) {
-    for (size_t i = 0; i < str.length(); ++i) {
-        bytes_.push_back(str[i]);
-    }
+    bytes_.assign(str.begin(), str.end());
 }
 
 void ByteContainer::BuildHex(const std::string& hex) {
@@ -36,10 +35,6 @@ void ByteContainer::BuildHex(const std::string& hex) {
         hex_string_stream >> next_byte;
         bytes_.push_back(next_byte);
     }
-}
-
-inline const Byte& ByteContainer::operator[](const size_t index) const {
-    return bytes_[index];
 }
 
 std::string ByteContainer::ToAscii() const {
@@ -109,4 +104,15 @@ bool operator==(const ByteContainer& lhs, const ByteContainer& rhs) {
         }
     }
     return true;
+}
+
+size_t HammingDistance(const ByteContainer& lhs, const ByteContainer& rhs) {
+    if (lhs.size() != rhs.size()) {
+        throw std::invalid_argument("lhs and rhs have different sizes");
+    }
+    size_t res = 0;
+    for (size_t i = 0; i < lhs.size(); ++i) {
+        res += (lhs[i] != rhs[i]);
+    }
+    return res;
 }

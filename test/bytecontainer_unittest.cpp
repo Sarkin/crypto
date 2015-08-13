@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -63,4 +64,21 @@ TEST(XOR, DifferentLengthSequences) {
     ByteContainer t_bc2("686974207468652062756c6c2773206579", StringRepresentation::kHex);
     ByteContainer t_res("746865206b696420646f6e277420706c611c", StringRepresentation::kHex);
     EXPECT_EQ(t_res, t_bc1 ^ t_bc2);
+}
+
+TEST(HammingDistance, EqualSequences) {
+    ByteContainer t_bc("1c0111001f010100061a024b53535009181c", StringRepresentation::kHex);
+    EXPECT_EQ(0, HammingDistance(t_bc, t_bc));
+}
+
+TEST(HammingDistance, DifferentSequences) {
+    ByteContainer t_bc1("kinan sarmini", StringRepresentation::kAscii);
+    ByteContainer t_bc2("kinan sarbigi", StringRepresentation::kAscii);
+    EXPECT_EQ(2, HammingDistance(t_bc1, t_bc2));
+}
+
+TEST(HammingDistance, DifferentLengthSequences) {
+    ByteContainer t_bc1("kinan", StringRepresentation::kAscii);
+    ByteContainer t_bc2("kinan sarbigi", StringRepresentation::kAscii);
+    ASSERT_THROW(HammingDistance(t_bc1, t_bc2), std::invalid_argument);
 }
