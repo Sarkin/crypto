@@ -30,7 +30,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread --std=c++11
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = bytecontainer_unittest
+TESTS = bytecontainer_unittest singlebyte_decryptor_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -68,9 +68,9 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-# Builds a sample test.  A test should link with either gtest.a or
-# gtest_main.a, depending on whether it defines its own main()
-# function.
+# Tests go here
+
+# bytecontainer
 
 bytecontainer.o : $(USER_DIR)/bytecontainer.cpp $(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/bytecontainer.cpp
@@ -80,4 +80,18 @@ bytecontainer_unittest.o : $(USER_TEST_DIR)/bytecontainer_unittest.cpp \
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/bytecontainer_unittest.cpp
 
 bytecontainer_unittest : bytecontainer.o bytecontainer_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+# singlebyte_decryptor
+
+singlebyte_decryptor.o : $(USER_DIR)/singlebyte_decryptor.cpp $(USER_DIR)/singlebyte_decryptor.h \
+	$(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/singlebyte_decryptor.cpp
+
+singlebyte_decryptor_unittest.o : $(USER_TEST_DIR)/singlebyte_decryptor_unittest.cpp \
+	$(USER_DIR)/singlebyte_decryptor.h \
+	$(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/singlebyte_decryptor_unittest.cpp
+
+singlebyte_decryptor_unittest : singlebyte_decryptor.o singlebyte_decryptor_unittest.o bytecontainer.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
