@@ -1,6 +1,7 @@
+#include "../src/utilities.h"
+
 #include <string>
 
-#include "../src/utilities.h"
 #include "gtest/gtest.h"
 
 TEST(SimpleEnglishValue, SimpleTest) {

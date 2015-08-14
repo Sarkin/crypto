@@ -1,8 +1,9 @@
+#include "../src/bytecontainer.h"
+
 #include <stdexcept>
 #include <string>
 #include <vector>
 
-#include "../src/bytecontainer.h"
 #include "gtest/gtest.h"
 
 TEST(Construction, ASCII) {

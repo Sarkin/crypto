@@ -21,6 +21,7 @@ public:
     typedef std::vector<Byte> Container;
 
     ByteContainer() { }
+    ByteContainer(size_t size) : bytes_(size) { }
     ByteContainer(const std::string& str, StringRepresentation rep);
     const Byte& operator[](const size_t index) const { return bytes_[index]; }
     Byte& operator[](const size_t index) { return bytes_[index]; }

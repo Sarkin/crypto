@@ -11,8 +11,8 @@ public:
     SingleByteDecryptor(const ByteContainer& bc) : bytes_(bc) { }
     // Returns the decryption of the cipher text using key.
     ByteContainer Decrypt(Byte key);
-    // Cryptographic attack! Try to guess the key and choose best candidate.
-    ByteContainer Decrypt();
+    // Cryptographic attack! Try to guess the key and choose best candidate. Returns the key.
+    Byte Decrypt();
 private:
     ByteContainer bytes_;
 };

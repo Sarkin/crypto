@@ -13,10 +13,10 @@ ByteContainer SingleByteDecryptor::Decrypt(Byte key) {
     return res;
 }
 
-ByteContainer SingleByteDecryptor::Decrypt() {
+Byte SingleByteDecryptor::Decrypt() {
     std::pair<int, int> value_key(0, 0);
     for (int key = 0; key < 256; key++) {
         value_key = std::max(value_key, std::make_pair(SimpleEnglishValue(Decrypt(key)), key));
     }
-    return Decrypt(value_key.second);
+    return value_key.second;
 }

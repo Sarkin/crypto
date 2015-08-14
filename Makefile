@@ -30,7 +30,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread --std=c++11
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = bytecontainer_unittest singlebyte_decryptor_unittest utilities_unittest
+TESTS = bytecontainer_unittest singlebyte_decryptor_unittest utilities_unittest repeating_key_encryptor_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -110,4 +110,18 @@ utilities_unittest.o : $(USER_TEST_DIR)/utilities_unittest.cpp \
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/utilities_unittest.cpp
 
 utilities_unittest : utilities.o utilities_unittest.o bytecontainer.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+# repeating_key_encryptor
+
+repeating_key_encryptor.o : $(USER_DIR)/repeating_key_encryptor.cpp $(USER_DIR)/repeating_key_encryptor.h \
+	$(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/repeating_key_encryptor.cpp
+
+repeating_key_encryptor_unittest.o : $(USER_TEST_DIR)/repeating_key_encryptor_unittest.cpp \
+	$(USER_DIR)/repeating_key_encryptor.h \
+	$(USER_DIR)/bytecontainer.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_TEST_DIR)/repeating_key_encryptor_unittest.cpp
+
+repeating_key_encryptor_unittest : repeating_key_encryptor.o repeating_key_encryptor_unittest.o bytecontainer.o  gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
