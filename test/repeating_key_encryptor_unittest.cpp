@@ -15,5 +15,5 @@ TEST(Encryption, SimplePlaintext) {
             "2027630c692b20283165286326302e27282f", StringRepresentation::kHex);
     ByteContainer t_key("ICE", StringRepresentation::kAscii);
     RepeatingKeyEncryptor rpe(t_bc);
-    EXPECT_EQ(t_expected, rpe.Encrypt(t_key)) << t_expected.ToAscii() << " " << rpe.Encrypt(t_key).ToAscii();
+    EXPECT_EQ(t_expected, rpe.Encrypt(t_key));
 }

@@ -15,7 +15,7 @@ TEST(Decryption, PlaintextEnglishWithKey) {
     EXPECT_EQ(t_bc, sbd.Decrypt('#'));
 }
 
-TEST(Decryption, PlaintextEnglishWithoutKey) {
+TEST(Decryption, PlaintextEnglishWithoutKey1) {
     std::string t_str = "This is my simple English plaintext string!";
     ByteContainer t_bc(t_str, StringRepresentation::kAscii);
     ByteContainer t_key(std::string(t_str.size(), '#'), StringRepresentation::kAscii);
@@ -24,7 +24,7 @@ TEST(Decryption, PlaintextEnglishWithoutKey) {
     EXPECT_EQ(t_bc, sbd.Decrypt(sbd.Decrypt()));
 }
 
-TEST(Decryption, PlaintextEnglishWithoutKey1) {
+TEST(Decryption, PlaintextEnglishWithoutKey2) {
     std::string t_str = "Cooking MC's like a pound of bacon";
     ByteContainer t_encrypted = ByteContainer("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736", StringRepresentation::kHex);
     SingleByteDecryptor sbd(t_encrypted);

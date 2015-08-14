@@ -36,6 +36,9 @@ public:
     size_t size() const {
         return bytes_.size();
     }
+    void push_back(Byte b) {
+        bytes_.push_back(b);
+    }
     // Returns ASCII representation of the byte sequence.
     std::string ToAscii() const;
     // Returns hex representation of the byte sequence.

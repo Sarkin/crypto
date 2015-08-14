@@ -10,5 +10,9 @@
 int SimpleEnglishValue(const ByteContainer& bc);
 // Same as above
 int SimpleEnglishValue(const std::string& str);
+// English plaintext scoring function.
+int EnglishValue(const ByteContainer& bc);
+// Same as above
+int EnglishValue(const std::string& str);
 
 #endif // CRYPTOGRAPHY_CRYPTO_UTILITIES_H_

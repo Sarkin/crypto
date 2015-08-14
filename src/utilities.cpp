@@ -24,3 +24,11 @@ int SimpleEnglishValue(const std::string& str) {
     }
     return score;
 }
+
+int EnglishValue(const ByteContainer& bc) {
+    return SimpleEnglishValue(bc);
+}
+
+int EnglishValue(const std::string& str) {
+    return SimpleEnglishValue(str);
+}
